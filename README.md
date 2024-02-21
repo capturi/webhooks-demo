@@ -70,3 +70,11 @@ interface FullWebhookPayload<T> extends WebhookPayload {
 ```
 
 The type of `T` for `FullWebhookPayload` will depend on the _Event_, for conversations it will be the `IntegrationConversationView` model from our Integration API.
+
+
+
+## Sample project
+
+Look into [src/](src/) folder for a C# demo project which can receive both a `Uid` and `Full` payload.
+
+We have used [nswag](https://github.com/RicoSuter/NSwag) to auto-generate a client stub of our Integration API, which gives us a model of `IntegrationConversationView` which is the payload for the `Full` model of the event, used in the sample.
