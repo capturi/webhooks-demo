@@ -1,4 +1,4 @@
-using webhooks_demo;
+namespace webhooks_demo.Models;
 
 public record FullWebhookPayload<T> : WebhookPayload
 {

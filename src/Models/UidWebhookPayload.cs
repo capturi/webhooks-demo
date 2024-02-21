@@ -1,4 +1,4 @@
-namespace webhooks_demo;
+namespace webhooks_demo.Models;
 
 public record UidWebhookPayload : WebhookPayload
 {
