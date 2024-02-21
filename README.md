@@ -43,14 +43,14 @@ These are the event types you can choose from:
 
 - `SummaryReady`
   - Triggered when a summary is ready / updated (_requires AI Features_)
-  - Full model will be based on `IntegrationConversationView`
+  - Full model will be based on `IntegrationConversationView` (see [API docs](https://api.capturi.ai/audio/swagger/docs/index.html?version=v2#tag/IntegrationConversations/paths/~1integrations~1conversations~1%7Buid%7D/get) for reference)
 - `ConversationProcessed`
   - Triggered when a conversation has been successfully processed
-  - Full model will be based on `IntegrationConversationView`
+  - Full model will be based on `IntegrationConversationView` (see [API docs](https://api.capturi.ai/audio/swagger/docs/index.html?version=v2#tag/IntegrationConversations/paths/~1integrations~1conversations~1%7Buid%7D/get) for reference)
 
 
 
-### Payload schema
+### Payload
 
 Depending on type of _Payload_ you configure, we will either use the `UidWebhookPayload` or `FullWebhookPayload` as payload for the webhook request we make.
 
