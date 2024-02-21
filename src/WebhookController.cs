@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using webhooks_demo.CapturiIntegrationClient;
+using webhooks_demo.Models;
 
 namespace webhooks_demo;
 
