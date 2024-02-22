@@ -73,6 +73,20 @@ The type of `T` for `FullWebhookPayload` will depend on the _Event_, for convers
 
 
 
+## Log / Replay
+
+It's possible to see all webhook requets made up to 7 days after they are made, in the `Webhook log` 
+
+![image-20240222112856437](README.assets/image-20240222112856437.png)
+
+From here you can even replay individual requests, or all requests in a given date-period.
+
+This can be useful to verify a request have been made, see what response we got from your service when we made the request as well as replay requests you may have lost due to downtime or other issues in the service receiving our webhook requests.
+
+As noted, **we only store requests for 7 days**, after this it's no longer possible to see or replay events.
+
+
+
 ## Sample project
 
 Look into [src/](src/) folder for a C# demo project which can receive both a `Uid` and `Full` payload.
