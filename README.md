@@ -41,36 +41,89 @@ The options are:
 
 These are the event types you can choose from:
 
-- `SummaryReady`
+- `ConversationSummaryUpdated`
   - Triggered when a summary is ready / updated (_requires AI Features_)
-  - Full model will be based on `IntegrationConversationView` (see [API docs](https://api.capturi.ai/audio/swagger/docs/index.html?version=v2#tag/IntegrationConversations/paths/~1integrations~1conversations~1%7Buid%7D/get) for reference)
+  - Full model will be based on `IntegrationConversationView` (see below under _Payload_ for reference)
 - `ConversationProcessed`
   - Triggered when a conversation has been successfully processed
-  - Full model will be based on `IntegrationConversationView` (see [API docs](https://api.capturi.ai/audio/swagger/docs/index.html?version=v2#tag/IntegrationConversations/paths/~1integrations~1conversations~1%7Buid%7D/get) for reference)
+  - Full model will be based on `IntegrationConversationView` (see below under _Payload_ for reference)
+
+  - `LiveSummaryCreated`
+  - Triggered when a live summary is created successfully
+  - Full model will be based on `FullLiveSummaryMessageWebhookPayload` (see below under _Payload_ for reference)
 
 
 
 ### Payload
 
-Depending on type of _Payload_ you configure, we will either use the `UidWebhookPayload` or `FullWebhookPayload` as payload for the webhook request we make.
+Depending on type of _Payload_ you configure, we will either use the `UidWebhookPayload` (sends only the `Uid` and the name of the event) or `FullWebhookPayload` (sends the full model) as payload for the webhook request we make.
 
 ```ts
-interface WebhookPayload {
-  EventUid: Guid
-  Event: 'ConversationSummaryUpdated' | 'ConversationProcessed'
-}
+type FullLiveSummaryMessageWebhookPayload = {
+  eventUid: Guid;
+  event: 'LiveSummaryMessage';
+  entity: {
+    uid: Guid;
+    puzzelSessionUid: string;
+    created: DateTime;
+    text: string;
+    metadata: Record<string, string>;
+  };
+};
 
-interface UidWebhookPayload extends WebhookPayload {
-  Uid: Guid
-}
+type UidConversationMessagePayload = {
+  event: 'ConversationSummaryUpdated' | 'ConversationProcessed';
+  uid: Guid;
+};
 
-interface FullWebhookPayload<T> extends WebhookPayload {
-  Entity: T
-}
+type FullConversationMessageWebhookPayload = {
+  eventUid: Guid;
+  event: 'ConversationSummaryUpdated' | 'ConversationProcessed';
+  entity: {
+    organizationId: Guid;
+    uid: Guid;
+    userUid: Guid;
+    teamUid?: Guid | null;
+    state: ConversationState;
+    externalIdentity: string;
+    source: string;
+    subject: string;
+    customer: string;
+    dateTime: DateTime;
+    lastChanged: string;
+    duration: number;
+    labels?: string[];
+    status: string;
+    deleted: boolean;
+    qaIsReviewed: boolean;
+    qaReviewedByUserUid: string | null;
+    qaReviewedDate: string | null;
+    questionnaireAnswers?: QuestionnaireAnswer[];
+    hasAudio: boolean;
+    hasConsent: boolean;
+    statistics?: ConversationStatistics;
+    trackerHits?: ConversationTrackerHit[];
+    insights?: ConversationInsights;
+    sentiment?: ConversationSentiment;
+    metadata?: ConversationMetadata;
+    details?: ConversationDetails;
+    metrics: ConversationMetrics;
+    ignoredPhrases?: ConversationIgnoredPhrase[];
+    scores?: {
+      [key: Guid]: ConversationScore;
+    };
+    summary?: string | null;
+    aiInsights?: ConversationAiInsights;
+    sentimentRaw: null | {
+      wordScore: {
+        user: number | null;
+        other: number | null;
+        combined: number | null;
+      };
+    };
+  };
+};
 ```
-
-The type of `T` for `FullWebhookPayload` will depend on the _Event_, for conversations it will be the `IntegrationConversationView` model from our Integration API.
-
 
 
 ## Log / Replay
