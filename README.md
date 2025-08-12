@@ -84,46 +84,21 @@ type FullConversationMessageWebhookPayload = {
     uid: Guid;
     userUid: Guid;
     teamUid?: Guid | null;
-    state: ConversationState;
-    externalIdentity: string;
-    source: string;
-    subject: string;
-    customer: string;
-    dateTime: DateTime;
-    lastChanged: string;
-    duration: number;
-    labels?: string[];
-    status: string;
-    deleted: boolean;
-    qaIsReviewed: boolean;
-    qaReviewedByUserUid: string | null;
-    qaReviewedDate: string | null;
-    questionnaireAnswers?: QuestionnaireAnswer[];
-    hasAudio: boolean;
-    hasConsent: boolean;
-    statistics?: ConversationStatistics;
-    trackerHits?: ConversationTrackerHit[];
-    insights?: ConversationInsights;
-    sentiment?: ConversationSentiment;
-    metadata?: ConversationMetadata;
-    details?: ConversationDetails;
-    metrics: ConversationMetrics;
-    ignoredPhrases?: ConversationIgnoredPhrase[];
-    scores?: {
-      [key: Guid]: ConversationScore;
-    };
-    summary?: string | null;
-    aiInsights?: ConversationAiInsights;
-    sentimentRaw: null | {
-      wordScore: {
-        user: number | null;
-        other: number | null;
-        combined: number | null;
-      };
-    };
+    // See integraiton API docs for the latest model description at
+    // https://api.capturi.ai/audio/swagger/docs/index.html?version=v2#tag/IntegrationConversations/paths/~1integrations~1conversations~1%7Buid%7D/get
   };
 };
 ```
+
+#### Hint
+
+If you need to see the latest C# model representation, you can navigate to `src/CapturiIntegrationClient` and issue
+
+```shell
+nswag run
+```
+
+(requires `dotnet 9.x` and `nswag` tools to be installed)
 
 
 ## Log / Replay
